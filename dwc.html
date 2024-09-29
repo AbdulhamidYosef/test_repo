@@ -1,0 +1,266 @@
+<script id="remove_duplicate_state_selector_DWCX195">
+
+ (() => {
+    const callback = (_, observer) => {
+      if (isDuplicateStateSelectorLoaded_DWCX195()) {
+        duplicateStateSelectorObserver_DWCX195asdasd.disconnect();
+
+        getRidOfDuplicateStateSelectorasdasd_DWCX195();
+      }
+    };
+
+    setTimeout(() => {
+      if (!isDuplicateStateSelectorLoaded_DWCX195()) return;
+
+      duplicateStateSelectorObserver_DWCX195.disconnect();
+    }, 10000);
+
+    duplicateStateSelectorObserver_DWCX195 = new MutationObserver(callback);
+    duplicateStateSelectorObserver_DWCX195.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  })();
+  (() => {
+    const callback = (_, observer) => {
+      if (isDuplicateStateSelectorLoaded_DWCX195()) {
+        duplicateStateSelectorObserver_DWCX195asdasd.disconnect();
+
+        getRidOfDuplicateStateSelectorasdasd_DWCX195();
+      }
+    };
+
+    setTimeout(() => {
+      if (!isDuplicateStateSelectorLoaded_DWCX195()) return;
+
+      duplicateStateSelectorObserver_DWCX195.disconnect();
+    }, 10000);
+
+    duplicateStateSelectorObserver_DWCX195 = new MutationObserver(callback);
+    duplicateStateSelectorObserver_DWCX195.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  })();
+</script>
+<script id='hero_banner_gift_DWCX195'>
+	// Constants
+	const NUM_OF_HERO_SLIDES_DWCX195 = 2;
+	LS_GIFT_DWCX195 = 'LS_GIFT_DWCX195';
+
+	// DOM -- Hero Banner
+	const getHeroBanner_DWCX195 = () => {
+		return document.querySelector('.homepage-carousel');
+	};
+
+	// Checks
+	const isHeroBannerReady_DWCX195 = () => {
+		return (
+			document.querySelectorAll(
+				'.homepage-carousel .slick-slide:not(.slick-cloned) img'
+			).length >= NUM_OF_HERO_SLIDES_DWCX195
+		);
+	};
+
+	// Helper Functions
+	const appendTicketName = (text) => {
+		if(!text) {
+			return;
+		}
+		return text + '_DWCX195';
+	}
+
+	// ------------------------------
+	(() => {
+		// Check if the user is shopping for a gift
+		const callback = (_, observer) => {
+			if(localStorage.getItem(LS_GIFT_DWCX195) === 'me') {
+				observer.disconnect();
+			}
+
+			if (isHeroBannerReady_DWCX195() && localStorage.getItem(LS_GIFT_DWCX195) === 'gift') {
+				observer.disconnect();
+				adjustHeroBanner_DWCX195();
+			}
+		};
+
+		const observer = new MutationObserver(callback);
+		observer.observe(document.body, {
+			attributes: true,
+			childList: true,
+			subtree: true,
+		});
+	})();
+
+	const adjustHeroBanner_DWCX195 = () => {
+		// Creating the HTML of the new slider
+		const originalSlider = document.querySelector('.homepage-carousel .slick-slider');
+
+		const sliderClone = originalSlider.cloneNode(true);
+		sliderClone.classList.remove('slick-initialized');
+		sliderClone.classList.add(appendTicketName('custom_hero_slider'));
+		originalSlider.style.display = 'none';
+
+		const slides = sliderClone.querySelectorAll(
+			'.slick-slide:not(.slick-cloned)'
+		);
+		slides.forEach((slide) => {
+			slide.classList.add(appendTicketName('custom_hero_slide'));
+
+			slide.querySelectorAll('*').forEach((el) => {
+				el.style.webkitUserDrag = 'none';
+				el.style.userSelect = 'none';
+			});
+
+			sliderClone.appendChild(slide);
+		});
+
+		insertGiftSlide_DWCX195(sliderClone, slides[0]);
+
+		[...sliderClone.children].forEach((child) => {
+			if (child.classList.contains(appendTicketName('custom_hero_slide'))){ 
+				return;
+			}
+			child.remove();
+		});
+
+		originalSlider.insertAdjacentElement('beforebegin', sliderClone);
+
+		// Arrows
+		const prevArrow = originalSlider.querySelector('.prev-arrow')?.outerHTML || 
+			'<div class="prev-arrow hero-banner-arrow--mobile" style="display: none;"></div>';
+
+		const nextArrow = originalSlider.querySelector('.next-arrow')?.outerHTML || 
+			'<div class="next-arrow hero-banner-arrow--mobile" style="display: none;"></div>';
+
+		// Convert the new slider to a Slick slider
+		$(sliderClone).slick({
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			speed: 1100,
+
+			// autoplay: false,
+			// autoplaySpeed: 2000,
+			infinite: true,
+			pauseOnHover: true,
+			pauseOnFocus: false,
+
+			dots: true,
+			customPaging: function (slider, i) {
+				return (
+					originalSlider.querySelectorAll('.slick-dots li > div')?.[i]?.outerHTML ||
+					originalSlider.querySelectorAll('.slick-dots .custom-dots > li button')?.[i]?.outerHTML
+				);
+			},
+
+			arrows: true,
+			prevArrow: prevArrow,
+			nextArrow: nextArrow,
+		});
+
+		// Adjust the pagination for mobile devices
+		if (window.innerWidth < 768) {
+			adjustPaginationForMobile_DWCX219(originalSlider, sliderClone);
+		}
+	};
+
+	const insertGiftSlide_DWCX195 = (sliderClone, slideTemplate) => {
+		const giftSlide = slideTemplate.cloneNode(true);
+		giftSlide.classList.add(appendTicketName('gift_slide'));
+
+		giftImage = giftSlide.querySelector('img');
+
+		/* To be edited when the gift slide is ready*/
+		giftImage.style.display = 'none';
+		giftImage.parentElement.style.cssText = `
+			height: 406px;
+			width: 100%;
+			min-width: 100vw;
+			animation-timeline: auto;
+			animation-range-start: normal;
+			animation-range-end: normal;
+			background: linear-gradient(90deg, rgb(255, 255, 255), rgb(217, 217, 217), rgb(255, 255, 255)) 0% 0% / 600% 600%;
+			animation: 2s ease 0s infinite normal none running LawGradient;
+		`;
+
+		sliderClone.insertAdjacentElement('afterbegin', giftSlide);
+
+		// Add the gift slide pagination on desktop
+		if(window.innerWidth >= 768) {
+			const originalDot = document.querySelector('.homepage-carousel .slick-slider .slick-dots > li');
+
+			if(!originalDot) {
+				return;
+			}
+
+			const giftDot = originalDot.cloneNode(true);
+
+			const giftDotImage = giftDot.querySelector('img');
+
+			/* To be edited when the gift slide is ready*/
+			giftDotImage.src = 'https://placehold.co/300x200/cccccc/ffffff?text=No+Image+Available';
+
+			giftDot.querySelector('[class*="title"]').innerText = 'Gift';
+			giftDot.querySelector('[class*="subtitle"]').innerText = '$-- Off';
+			
+			const originalDotsContainer = document.querySelector('.homepage-carousel .slick-slider .slick-dots')
+			originalDotsContainer.insertAdjacentElement('afterbegin', giftDot);
+
+			// Reorder the index of the dots
+			const originalDots = document.querySelectorAll('.homepage-carousel .slick-slider .slick-dots li > div');
+			originalDots.forEach((dot, index) => {
+				dot.setAttribute('data-dot', index);
+			})
+
+		} else {
+			const originalDot = document.querySelector('.homepage-carousel .slick-slider .custom-dots > li');
+
+			if(!originalDot) {
+				return;
+			}
+
+			const giftDot = originalDot.cloneNode(true);
+			const originalDotsContainer = document.querySelector('.homepage-carousel .slick-slider .custom-dots')
+			originalDotsContainer.insertAdjacentElement('afterbegin', giftDot);
+		}
+	};
+
+	const adjustPaginationForMobile_DWCX219 = (originalSlider, sliderClone) => {
+		const originalSliderPagination = originalSlider.querySelector('.slick-dots');
+		const sliderClonePagination = sliderClone.querySelector('.slick-dots');
+
+		// Replicate the custom css classes for the cloned slider
+		sliderClonePagination.className = originalSliderPagination.className;
+
+		// Create a dots wrapper
+		const dotsWrapper = document.createElement('div');
+		dotsWrapper.classList.add('custom-dots');
+
+		const dots = sliderClone.querySelectorAll('.slick-dots > li');
+		dots.forEach((dot) => {
+			dotsWrapper.appendChild(dot);
+		});
+
+		sliderClonePagination.appendChild(dotsWrapper);
+
+		// Get the original paggination's arrow buttons
+		const leftArrow = originalSliderPagination.querySelector('.left-arrow').cloneNode(true);
+		const rightArrow = originalSliderPagination.querySelector('.right-arrow').cloneNode(true);
+
+		dotsWrapper.insertAdjacentElement('beforebegin', leftArrow);
+		dotsWrapper.insertAdjacentElement('afterend', rightArrow);
+
+		// Add event listeners to the cloned arrows
+		leftArrow.addEventListener('click', () => {
+			sliderClone
+				.querySelector('.prev-arrow.hero-banner-arrow--mobile')
+				?.click();
+		});
+
+		rightArrow.addEventListener('click', () => {
+			sliderClone
+				.querySelector('.next-arrow.hero-banner-arrow--mobile')
+				?.click();
+		});
+		};
+</script>
