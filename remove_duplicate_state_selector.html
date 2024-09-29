@@ -1,27 +1,4 @@
 <script id="remove_duplicate_state_selector_DWCX195">
-  // Constants
-  const DUPLICATE_STATE_SELECTOR_TEXT_IDENTIFIER_DWCX195 =
-    "Where are you shipping your wine?";
-  const DUPLICATE_STATE_SELECTOR_OBSERVER_TIMEOUT_DWCX195 = 10000; // 10 seconds
-
-  // Variables
-  let duplicateStateSelectorObserver_DWCX195;
-
-  // DOM Selectors
-  const getDuplicateStateSelectors_DWCX195 = () => {
-    const modals = document.querySelectorAll(".rc-modal");
-
-    if (!modals.length) return;
-
-    const duplicateStateSelectorModal = [...modals].find((modal) =>
-      modal.textContent.includes(
-        DUPLICATE_STATE_SELECTOR_TEXT_IDENTIFIER_DWCX195
-      )
-    )?.parentElement;
-
-    return duplicateStateSelectorModal;
-  };
-
   // Checks
   const isDuplicateStateSelectorLoaded_DWCX195 = () => {
     return !!getDuplicateStateSelectors_DWCX195();
